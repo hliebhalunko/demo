@@ -33,18 +33,14 @@ public class UserServiceImplTest {
         userService.addUser(null);
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void validateUserDTO_exceptionThrownIfUserNameIsNullOrEmpty() {
-
-        exceptionRule.expect(IllegalArgumentException.class);
 
         userService.addUser(userDTO);
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void validateUserDTO_exceptionThrownIfEmailIsNullOrEmpty() {
-
-        exceptionRule.expect(IllegalArgumentException.class);
 
         when(userDTO.getUsername()).thenReturn("testname");
 
@@ -52,10 +48,8 @@ public class UserServiceImplTest {
 
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void validateUserDTO_exceptionThrownIfEmailIsInvalid() {
-
-        exceptionRule.expect(IllegalArgumentException.class);
 
         when(userDTO.getUsername()).thenReturn("testname");
         when(userDTO.getEmail()).thenReturn("invalidemail");
@@ -75,9 +69,8 @@ public class UserServiceImplTest {
 
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void validateUserDTO_exceptionThrownIfUserRoleIsNull() {
-        exceptionRule.expect(IllegalArgumentException.class);
 
         when(userDTO.getUsername()).thenReturn("testname");
         when(userDTO.getEmail()).thenReturn("validemail@gmail.com");
@@ -86,9 +79,8 @@ public class UserServiceImplTest {
 
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void validateUserDTO_exceptionThrownIfUserHasInappropriateRole() {
-        exceptionRule.expect(IllegalArgumentException.class);
 
         when(userDTO.getUsername()).thenReturn("testname");
         when(userDTO.getEmail()).thenReturn("validemail@gmail.com");
