@@ -6,8 +6,11 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.Silent.class)
 @SpringBootTest
@@ -15,6 +18,9 @@ public class UserServiceImplTest {
 
     @InjectMocks
     private UserServiceImpl userService;
+
+    @Mock
+    private UserDTO userDTO;
 
     @Rule
     public ExpectedException exceptionRule = ExpectedException.none();
@@ -32,8 +38,31 @@ public class UserServiceImplTest {
 
         exceptionRule.expect(IllegalArgumentException.class);
 
-        UserDTO userRequestDTO = new UserDTO();
-        userService.addUser(userRequestDTO);
+        userService.addUser(userDTO);
     }
+
+    @Test
+    public void exceptionThrownIfEmailIsNullOrEmpty(){
+
+        exceptionRule.expect(IllegalArgumentException.class);
+
+        when(userDTO.getUsername()).thenReturn("testname");
+
+        userService.addUser(userDTO);
+
+    }
+
+    @Test
+    public void exceptionThrownIfEmailIsInvalid(){
+
+        exceptionRule.expect(IllegalArgumentException.class);
+
+        when(userDTO.getUsername()).thenReturn("testname");
+        when(userDTO.getEmail()).thenReturn("invalidemail");
+
+        userService.addUser(userDTO);
+
+    }
+
 
 }
