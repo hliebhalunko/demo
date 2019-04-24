@@ -26,7 +26,7 @@ public class UserServiceImplTest {
     public ExpectedException exceptionRule = ExpectedException.none();
 
     @Test
-    public void exceptionThrownIfDTONotExists(){
+    public void addUser_exceptionThrownIfDTONotExists() {
 
         exceptionRule.expect(IllegalArgumentException.class);
 
@@ -34,7 +34,7 @@ public class UserServiceImplTest {
     }
 
     @Test
-    public void exceptionThrownIfUserNameIsNullOrEmpty(){
+    public void validateUserDTO_exceptionThrownIfUserNameIsNullOrEmpty() {
 
         exceptionRule.expect(IllegalArgumentException.class);
 
@@ -42,7 +42,7 @@ public class UserServiceImplTest {
     }
 
     @Test
-    public void exceptionThrownIfEmailIsNullOrEmpty(){
+    public void validateUserDTO_exceptionThrownIfEmailIsNullOrEmpty() {
 
         exceptionRule.expect(IllegalArgumentException.class);
 
@@ -53,7 +53,7 @@ public class UserServiceImplTest {
     }
 
     @Test
-    public void exceptionThrownIfEmailIsInvalid(){
+    public void validateUserDTO_exceptionThrownIfEmailIsInvalid() {
 
         exceptionRule.expect(IllegalArgumentException.class);
 
@@ -65,10 +65,45 @@ public class UserServiceImplTest {
     }
 
     @Test
-    public void testValidEmail(){
+    public void validateUserDTO_testValidEmail() {
 
         when(userDTO.getUsername()).thenReturn("testname");
         when(userDTO.getEmail()).thenReturn("validemail@gmail.com");
+        when(userDTO.getRole()).thenReturn("admin");
+
+        userService.addUser(userDTO);
+
+    }
+
+    @Test
+    public void validateUserDTO_exceptionThrownIfUserRoleIsNull() {
+        exceptionRule.expect(IllegalArgumentException.class);
+
+        when(userDTO.getUsername()).thenReturn("testname");
+        when(userDTO.getEmail()).thenReturn("validemail@gmail.com");
+
+        userService.addUser(userDTO);
+
+    }
+
+    @Test
+    public void validateUserDTO_exceptionThrownIfUserHasInappropriateRole() {
+        exceptionRule.expect(IllegalArgumentException.class);
+
+        when(userDTO.getUsername()).thenReturn("testname");
+        when(userDTO.getEmail()).thenReturn("validemail@gmail.com");
+        when(userDTO.getRole()).thenReturn("other");
+
+        userService.addUser(userDTO);
+
+    }
+
+    @Test
+    public void validateUserDTO_testValidRole() {
+
+        when(userDTO.getUsername()).thenReturn("testname");
+        when(userDTO.getEmail()).thenReturn("validemail@gmail.com");
+        when(userDTO.getRole()).thenReturn("admin");
 
         userService.addUser(userDTO);
 
