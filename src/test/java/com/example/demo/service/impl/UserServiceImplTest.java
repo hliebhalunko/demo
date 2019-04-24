@@ -64,5 +64,14 @@ public class UserServiceImplTest {
 
     }
 
+    @Test
+    public void testValidEmail(){
+
+        when(userDTO.getUsername()).thenReturn("testname");
+        when(userDTO.getEmail()).thenReturn("validemail@gmail.com");
+
+        userService.addUser(userDTO);
+
+    }
 
 }
