@@ -1,7 +1,8 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.dto.request.UserRequestDTO;
+import com.example.demo.dto.request.UserDTO;
 import com.example.demo.service.UserService;
+import com.google.common.base.Strings;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,10 +14,17 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public long addUser(UserRequestDTO userRequestDTO) {
-        if(Objects.isNull(userRequestDTO)){
+    public long addUser(UserDTO userDTO) {
+        if(Objects.isNull(userDTO)){
             throw new IllegalArgumentException("User DTO is null!");
         }
+        validateUserDTO(userDTO);
         return 0;
+    }
+
+    private void validateUserDTO(UserDTO userDTO) {
+        if(Strings.isNullOrEmpty(userDTO.getUsername())){
+            throw new IllegalArgumentException("Username is null or empty!");
+        }
     }
 }

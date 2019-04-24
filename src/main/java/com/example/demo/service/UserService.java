@@ -1,9 +1,9 @@
 package com.example.demo.service;
 
-import com.example.demo.dto.request.UserRequestDTO;
+import com.example.demo.dto.request.UserDTO;
 
 public interface UserService {
 
-    long addUser(UserRequestDTO userRequestDTO);
+    long addUser(UserDTO userRequestDTO);
 
 }
